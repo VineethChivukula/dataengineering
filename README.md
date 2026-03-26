@@ -1,11 +1,13 @@
-# The Data Engineering Repo
+# The Data Engineering Project
 
 This repository will contain the necessary information required to become a worthy data engineer.
 
 ## About me
 
-Hi! I'm [Vineeth](https://www.linkedin.com/in/vineethchivukula/). I have been working as a Data Engineer at [Accenture](https://www.accenture.com/) since September 2024. To be honest, while I was originally trained in Java, fate had other plans and led me into the world of data engineering. I am working on a project that involves Snowflake and dbt, and I currently hold three Snowflake certifications and two Azure certifications. I hope to share what I’ve learned with you all here. I’m still learning every day, so this repository is a **work in progress** that I’ll keep updating as I go!
+Hi! I'm [Vineeth](https://www.linkedin.com/in/vineethchivukula/) and I work as a Data Engineer at Accenture. I consider myself lucky because at the initial stage of my career, Data Engineering chose me. When I joined Accenture, I was trained on Java but after a while, they trained me on Python, Data Fundamentals, and Informatica. Later I was assigned to a DBT Project. I have finally understood why people say *"you don't chose data engineering, it choses you"* haha. Anyway, I chose to do this because I want to fully understand Data Engineering and document the knowledge required at a single place so that it will be useful to refer. I personally hate referring a lot of sources when I want to revise something, so I have decided to keep everything here in this repo. I will be more than happy if this repo changes someone's life :).
+
+**Note**: This is a Work in Progress because I too don't know certain concepts, and it takes time to prepare notes. Don't worry, this repo will not contain any AI Slop ;)
 
 ## Goal
 
-A one-stop resource for mastering Data Engineering and acing your interviews. My mission is to simplify complex data concepts and provide the tools you need to land your next big role.
+My goal for this repository is to simplify complex Data Engineering concepts and provide you the necessary knowledge to tackle interviews or anything related to Data Engineering in general.
