@@ -13,7 +13,7 @@ A data engineer manages the data engineering lifecycle, beginning with getting d
 
 ## Data Engineering Lifecycle
 
-It is an end-to-end process of moving raw data from a source system to a target where it delivers value. The below diagram is very ==important== because everything that you do in Data Engineering lies here irrespective of tools and technologies.
+It is an end-to-end process of moving raw data from a source system to a target where it delivers value. The below diagram is very **important** because everything that you do in Data Engineering lies here irrespective of tools and technologies.
 
 ![Data Engineering Lifecycle Diagram](images/lifecycle.png)
 
