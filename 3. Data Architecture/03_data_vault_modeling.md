@@ -129,9 +129,6 @@ H_USER <|-- L_USER_POST : user_hk
 H_POST <|-- L_USER_POST : post_hk
 H_POST <|-- L_POST_PLATFORM : post_hk
 H_PLATFORM <|-- L_POST_PLATFORM : platform_hk
-H_USER <|-- S_USER : user_hk
-H_POST <|-- S_POST : post_hk
-H_PLATFORM <|-- S_PLATFORM : platform_hk
 
 L_USER_POST <|-- F_SOCIAL_MEDIA_USAGE_ANALYSIS : user_hk, post_hk
 L_POST_PLATFORM <|-- F_SOCIAL_MEDIA_USAGE_ANALYSIS : post_hk, platform_hk
