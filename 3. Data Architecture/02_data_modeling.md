@@ -195,9 +195,9 @@ D_PRODUCT_CATEGORY <|-- D_PRODUCT : product_category_id
 As the name suggests, slowly changing dimensions (SCD) are dimensions that change slowly over time. For example, a customer's address may change over time, but their name and email may not change as frequently. There are different types of slowly changing dimensions, and the way they are handled in the data model can vary depending on the requirements of the project. The most common types of slowly changing dimensions are:
 
 1. **Type 1**: In this type, the old value is overwritten with the new value. This means that there is no history of the changes, and only the current value is stored in the dimension table.
-2. **Type 2**: In this type, a new record is created in the dimension table for each change. This means that there is a history of the changes, and both the old and new values are stored in the dimension table.
+2. **Type 2**: In this type, a new record is created in the dimension table for each change. This means that there is a history of the changes, and both the old and new values are stored in the dimension table using active flags or start/end dates.
 3. **Type 3**: In this type, a new column is added to the dimension table to store the old value. This means that there is a history of the changes, but only the current and previous values are stored in the dimension table.
 4. **Type 4**: In this type, a new table is created to store the history of the changes. This means that there is a history of the changes, and all values are stored in the history table.
-5. **Type 6**: In this type, a combination of Type 1, Type 2, and Type 3 is used to handle the changes. This means that there is a history of the changes, and both the current and previous values are stored in the dimension table, as well as a history table.
+5. **Type 6**: In this type, a combination of Type 1, Type 2, and Type 3 is used to handle the changes. This means that there is a history of the changes, and both the current and previous values are stored in the dimension table.
 
 Now that you have a good idea about dimensional modeling, there is an interesting concept called data vault modeling, which is a more flexible and scalable approach to data modeling that is designed to handle large and complex data sets. This is what is used in my current project, and I will cover it in the next section.
