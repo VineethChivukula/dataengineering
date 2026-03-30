@@ -1,0 +1,10 @@
+# Types of Database Management Systems
+
+There are several types of DBMS, each designed to handle specific types of data. We will only cover the most common types:
+
+1. **Relational Database Management System (RDBMS)**: This is the most common type of DBMS. It organizes data into tables that contain rows and columns. Each table has a unique key that identifies each row. MySQL, PostgreSQL, Oracle Database, and Microsoft SQL Server are some RDBMS examples. RDBMSs use a language called Structured Query Language (SQL) for managing and manipulating data.
+2. **NoSQL Database Management System**: NoSQL databases are designed to handle unstructured data and are often used for big data applications. They do not use the traditional table-based structure of RDBMS. Instead, they use various data models, such as document, key-value, graph, or column-family. MongoDB, Cassandra, and Redis are some examples of NoSQL databases.
+3. **Object-Oriented Database Management System (OODBMS)**: OODBMSs store data in the form of objects, as used in object-oriented programming. They allow for complex data types and relationships between data. ObjectDB and db4o are examples of OODBMSs.
+4. **Hierarchical Database Management System**: This type of DBMS organizes data in a tree-like structure, where each record has a single parent and can have multiple children. It is efficient for certain types of data but can be inflexible. IBM's Information Management System (IMS) is an example of a hierarchical DBMS.
+5. **Network Database Management System**: Similar to hierarchical DBMS, but allows for more complex relationships between records. Each record can have multiple parents and children. Integrated Data Store (IDS) is an example of a network DBMS.
+6. **Graph Database Management System**: This type of DBMS is designed to handle data that is best represented as a graph, with nodes and edges. It is particularly useful for applications like social networks, recommendation engines, and fraud detection. Neo4j is a popular graph database.
