@@ -44,3 +44,45 @@ In order to differentiate between simple, composite, derived, and multivalued at
 ![Attribute Types Representation](images/attribute_types.png)
 
 ### Relationships
+
+A relationship is an association between two or more entities. It represents how entities are related to each other in the real world. For example, in a university database, a "Student" entity may have a relationship with a "Course" entity through an "Enrollment" relationship, which indicates that a student is enrolled in a course. A relationship is represented by a diamond shape in an ER diagram.
+
+![Relationship Representation](images/relationship.png)
+
+A relationship set is a collection of similar types of relationships. For example, all the enrollments between students and courses can be considered as a relationship set.
+
+Okay, there are two concepts related to relationships that we need to understand i.e., Degree and Cardinality.
+
+#### Degree of a Relationship
+
+The degree of a relationship refers to the number of entities that are involved in the relationship. There are four types of relationships based on their degree:
+
+1. **Unary Relationship:** A unary relationship is a relationship that involves only one entity. For example, in a university database, a "Student" entity may have a unary relationship with itself to represent the "Advises" relationship, where a student can advise other students.
+2. **Binary Relationship:** A binary relationship is a relationship that involves two entities. For example, in a university database, a "Student" entity may have a binary relationship with a "Course" entity through an "Enrollment" relationship, which indicates that a student is enrolled in a course.
+3. **Ternary Relationship:** A ternary relationship is a relationship that involves three entities. For example, in a university database, a "Student" entity may have a ternary relationship with a "Course" entity and a "Professor" entity through a "Teaches" relationship, which indicates that a professor teaches a course to students.
+4. **N-ary Relationship:** An n-ary relationship is a relationship that involves more than three entities. For example, in a university database, a "Student" entity may have an n-ary relationship with a "Course" entity, a "Professor" entity, and a "Department" entity through a "Teaches" relationship, which indicates that a professor teaches a course to students in a specific department.
+
+![Relationship Degree Representation](images/relationship_degree.png)
+
+#### Cardinality of a Relationship
+
+The cardinality of a relationship refers to the number of instances of one entity that can be associated with instances of another entity in a relationship. There are three types of cardinality:
+
+1. **One-to-One (1:1):** In a one-to-one relationship, each instance of one entity is associated with at most one instance of another entity, and vice versa. For example, in a government database, a "Citizen" entity may have a one-to-one relationship with a "Passport" entity, where each citizen can have at most one passport, and each passport can be associated with at most one citizen.
+2. **One-to-Many (1:N):** In a one-to-many relationship, each instance of one entity can be associated with multiple instances of another entity, but each instance of the other entity can be associated with at most one instance of the first entity. For example, in a library database, an "Author" entity may have a one-to-many relationship with a "Book" entity, where each author can write multiple books, but each book can be written by at most one author.
+3. **Many-to-Many (M:N):** In a many-to-many relationship, each instance of one entity can be associated with multiple instances of another entity, and vice versa. For example, in a hospital database, a "Doctor" entity may have a many-to-many relationship with a "Patient" entity through an "Treats" relationship, where each doctor can treat multiple patients, and each patient can be treated by multiple doctors.
+
+In order to differentiate between one-to-one, one-to-many, and many-to-many relationships in an ER diagram, we use different notations. A one-to-one relationship is represented by a single line connecting the entities, a one-to-many relationship is represented by a line with a crow's foot at the end of the entity that can have multiple instances, and a many-to-many relationship is represented by a line with crow's feet at both ends.
+
+![Relationship Cardinality Representation](images/relationship_cardinality.png)
+
+#### Participation of an Entity in a Relationship
+
+The participation of an entity in a relationship refers to whether all instances of the entity are involved in the relationship or only some instances. There are two types of participation:
+
+1. **Total Participation:** In total participation, all instances of an entity are involved in the relationship. For example, in a university database, a "Student" entity may have total participation in an "Enrollment" relationship with a "Course" entity, where every student must be enrolled in at least one course.
+2. **Partial Participation:** In partial participation, only some instances of an entity are involved in the relationship. For example, in a company database, an "Employee" entity may have partial participation in a "Works On" relationship with a "Project" entity, where only some employees work on projects.
+
+In order to differentiate between total and partial participation in an ER diagram, we use different notations. Total participation is represented by a double line connecting the entity to the relationship, while partial participation is represented by a single line.
+
+![Participation Representation](images/participation.png)
