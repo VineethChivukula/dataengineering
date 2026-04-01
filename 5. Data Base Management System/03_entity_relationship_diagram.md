@@ -86,3 +86,134 @@ The participation of an entity in a relationship refers to whether all instances
 In order to differentiate between total and partial participation in an ER diagram, we use different notations. Total participation is represented by a double line connecting the entity to the relationship, while partial participation is represented by a single line.
 
 ![Participation Representation](images/participation.png)
+
+## Crow's Foot Notation
+
+Crow's Foot Notation is a popular notation used in ER diagrams to represent the cardinality of relationships. It uses symbols to indicate the number of instances of one entity that can be associated with instances of another entity in a relationship. Following are the symbols used in Crow's Foot Notation:
+
+| Symbol | Meaning |
+| -------- | --------- |
+| o\| | Zero-or-one |
+| o{ | Zero-or-many |
+| \|\| | One and only one |
+| \|{ | One or many |
+
+## A real-world example of an ER Diagram
+
+```mermaid
+erDiagram
+
+    UNIVERSITY ||--|{ DEPARTMENT : "has"
+    DEPARTMENT ||--o| DEPARTMENT_HEAD : "led by"
+    PROFESSOR ||--|| DEPARTMENT_HEAD : "appointed as"
+    DEPARTMENT ||--|{ COURSE : "offers"
+    PROFESSOR ||--o{ COURSE : "teaches"
+    STUDENT }o--o{ COURSE : "enrolls in"
+    COURSE ||--|{ COURSE_SECTION : "divided into"
+    COURSE_SECTION ||--o{ ENROLLMENT : "has"
+    STUDENT ||--o{ ENROLLMENT : "registers for"
+    COURSE ||--o{ ASSIGNMENT : "has"
+    STUDENT ||--o{ SUBMISSION : "submits"
+    ASSIGNMENT ||--|{ SUBMISSION : "receives"
+    STUDENT o|--|| STUDENT_PROFILE : "has"
+
+    UNIVERSITY {
+        int id PK
+        string name
+        string location
+        int founded_year
+    }
+
+    DEPARTMENT {
+        int id PK
+        int university_id FK
+        string name
+        string building
+    }
+
+    DEPARTMENT_HEAD {
+        int id PK
+        int department_id FK
+        int professor_id FK
+        date start_date
+    }
+
+    PROFESSOR {
+        int id PK
+        int department_id FK
+        string name
+        string email
+        string rank
+    }
+
+    STUDENT {
+        int id PK
+        string name
+        string email
+        date enrolled_on
+    }
+
+    STUDENT_PROFILE {
+        int id PK
+        int student_id FK
+        string address
+        string phone
+        string gpa
+    }
+
+    COURSE {
+        int id PK
+        int department_id FK
+        int professor_id FK
+        string title
+        int credits
+    }
+
+    COURSE_SECTION {
+        int id PK
+        int course_id FK
+        string semester
+        string room
+        int capacity
+    }
+
+    ENROLLMENT {
+        int id PK
+        int student_id FK
+        int section_id FK
+        string grade
+    }
+
+    ASSIGNMENT {
+        int id PK
+        int course_id FK
+        string title
+        date due_date
+        int max_score
+    }
+
+    SUBMISSION {
+        int id PK
+        int assignment_id FK
+        int student_id FK
+        date submitted_at
+        int score
+    }
+```
+
+The diagram above seems complex, but it is very easy to understand.
+First thing to notice is that there are 11 entities in the diagram i.e., UNIVERSITY, DEPARTMENT, DEPARTMENT_HEAD, PROFESSOR, STUDENT, STUDENT_PROFILE, COURSE, COURSE_SECTION, ENROLLMENT, ASSIGNMENT and SUBMISSION. Each entity has its own attributes, primary keys (PK), and foreign keys (FK). I will explain you about PK and FK later but for now let's focus on the relationships and their cardinality:
+
+1. UNIVERSITY has a one-to-many relationship with DEPARTMENT (`||--|{`), which means that one university must have at least one department, and each department belongs to exactly one university.
+2. DEPARTMENT has a one-to-zero-or-one relationship with DEPARTMENT_HEAD (`||--o|`), which means that each department may or may not have a department head at a given time, but each department head leads exactly one department.
+3. DEPARTMENT has a one-to-many relationship with COURSE (`||--|{`), which means that one department can offer multiple courses, but each course is offered by exactly one department.
+4. DEPARTMENT_HEAD has a one-to-one relationship with PROFESSOR (`||--||`), which means that each department head is appointed as exactly one professor, and each professor can be appointed as a department head for only one department.
+5. PROFESSOR has a one-to-zero-or-many relationship with COURSE (`||--o{`), which means that a professor may teach zero or more courses (e.g., a newly hired professor may not yet be assigned any course), but each course is taught by exactly one professor.
+6. COURSE has a zero-or-many-to-zero-or-many relationship with STUDENT (`}o--o{`), which means that a course can have zero or more students enrolled, and a student can be enrolled in zero or more courses (e.g., a student who has just registered but not yet enrolled in any course).
+7. COURSE has a one-to-many relationship with COURSE_SECTION (`||--|{`), which means that one course must have at least one section, and each section belongs to exactly one course.
+8. COURSE has a one-to-zero-or-many relationship with ASSIGNMENT (`||--o{`), which means that a course can have zero or more assignments, but each assignment belongs to exactly one course.
+9. STUDENT has a zero-or-one-to-one relationship with STUDENT_PROFILE (`o|--||`), which means that a student may or may not have a profile yet, but each student profile belongs to exactly one student.
+10. STUDENT has a one-to-zero-or-many relationship with ENROLLMENT (`||--o{`), which means that one student can have zero or more enrollments, but each enrollment record belongs to exactly one student.
+11. STUDENT has a one-to-zero-or-many relationship with SUBMISSION (`||--o{`), which means that one student can make zero or more submissions, but each submission belongs to exactly one student.
+12. COURSE_SECTION has a one-to-zero-or-many relationship with ENROLLMENT (`||--o{`), which means that one course section can have zero or more enrollments (e.g., a newly created section with no students yet), but each enrollment belongs to exactly one course section.
+13. ASSIGNMENT has a one-to-many relationship with SUBMISSION (`||--|{`), which means that one assignment must have at least one submission, and each submission belongs to exactly one assignment.
