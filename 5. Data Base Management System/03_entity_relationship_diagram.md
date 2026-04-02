@@ -217,3 +217,58 @@ First thing to notice is that there are 11 entities in the diagram i.e., UNIVERS
 11. STUDENT has a one-to-zero-or-many relationship with SUBMISSION (`||--o{`), which means that one student can make zero or more submissions, but each submission belongs to exactly one student.
 12. COURSE_SECTION has a one-to-zero-or-many relationship with ENROLLMENT (`||--o{`), which means that one course section can have zero or more enrollments (e.g., a newly created section with no students yet), but each enrollment belongs to exactly one course section.
 13. ASSIGNMENT has a one-to-many relationship with SUBMISSION (`||--|{`), which means that one assignment must have at least one submission, and each submission belongs to exactly one assignment.
+
+## Generalization
+
+Generalization is a process of extracting common characteristics from two or more entities and creating a new generalized entity. The generalized entity represents the common features of the original entities, while the original entities are called specialized entities. Generalization is represented in an ER diagram by a triangle symbol.
+
+For example, in a university database, we can have two entities "Undergraduate Student" and "Graduate Student" that share common attributes such as "Student ID", "Name", and "Email". We can generalize these two entities into a new entity called "Student" that represents the common features of both undergraduate and graduate students. Below is the ER diagram that illustrates this generalization:
+
+```mermaid
+flowchart TD
+Student[Student]
+UndergraduateStudent[UndergraduateStudent]
+GraduateStudent[GraduateStudent]
+ISA@{ shape: tri, label: "IS-A" }
+Student --- ISA --- UndergraduateStudent
+ISA --- GraduateStudent
+```
+
+## Specialization
+
+Specialization is the opposite of generalization. It is a process of creating new specialized entities from an existing generalized entity based on some distinguishing characteristics. The specialized entities represent the unique features of the original entity, while the original entity is called the generalized entity. Specialization is also represented in an ER diagram by a triangle symbol but in the reverse direction.
+
+For example, in a university database, we can have a generalized entity "Student" that represents all students, and we can specialize it into two new entities "Undergraduate Student" and "Graduate Student" based on their level of study. Below is the ER diagram that illustrates this specialization:
+
+```mermaid
+flowchart TD
+Student[Student]
+UndergraduateStudent[UndergraduateStudent]
+GraduateStudent[GraduateStudent]
+ISA@{ shape: flip-tri, label: "IS-A" }
+Student --- ISA --- UndergraduateStudent
+ISA --- GraduateStudent
+```
+
+## Inheritance
+
+Inheritance is a concept that allows specialized entities to inherit attributes and relationships from their generalized entity. In addition to inheriting attributes, specialized entities can also have their own unique attributes and relationships.
+
+For example, in a university database, the "Undergraduate Student" and "Graduate Student" entities can inherit common attributes such as "Student ID", "Name", and "Email" from the generalized "Student" entity, while also having their own unique attributes such as "Major" for undergraduate students and "Thesis Topic" for graduate students.
+
+## Aggregation
+
+Aggregation is a concept that allows us to treat a relationship between entities as a higher-level entity. It is used when we want to model a relationship that has its own attributes or when we want to simplify complex relationships.
+
+For example, in an employee database, we can have a relationship "Builds" between the "Employee" and "Project" entities. Let us say we want to model the "Manages" relationship as a higher-level entity called "Manager". The "Manager" entity can have its own attributes such as "Manager ID" and "Manager Name". Below is the ER diagram that illustrates this aggregation:
+
+```mermaid
+flowchart TD
+    Manager[Manager] --- Manages@{ shape: diamond, label: "Manages" }
+    Manages --- row
+
+    subgraph row[ ]
+        direction LR
+        Employee[Employee] --- Builds@{ shape: diamond, label: "Builds" } --- Project[Project]
+    end
+```
