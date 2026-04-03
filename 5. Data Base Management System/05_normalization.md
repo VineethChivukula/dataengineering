@@ -204,3 +204,53 @@ We stop here because the table fails the second criterion for 3NF. Again, what d
 | 21  | 2003      |
 
 Well, if you remember, this is the same table we had before in the earlier 3NF example! So, we have successfully removed the transitive dependency and hence, the Students table is now in Third Normal Form (3NF).
+
+## Boyce-Codd Normal Form (BCNF)
+
+A table is in Boyce-Codd Normal Form (BCNF) if it meets the following criteria:
+
+1. It is in Third Normal Form (3NF).
+2. For every functional dependency X -> Y, X should be a super key. Hmm, some gibberish right? To put simply, every column must depend on the primary key, including the columns that are part of the primary key. This is a stronger version of 3NF because in 3NF, we only require that non-prime attributes should not depend on other non-prime attributes, but in BCNF, we require that every attribute should depend on the primary key and nothing else.
+
+For example, consider the following table that contains information about students, subjects, and their teachers. An assumption here is that each teacher teaches only one subject, but a subject can be taught by multiple teachers (e.g., different sections of the same course):
+
+| StudentID | Subject         | Teacher     |
+|-----------|-----------------|-------------|
+| 1         | Math            | Mr. Smith   |
+| 1         | Science         | Mrs. Johnson|
+| 2         | Math            | Mr. Jones   |
+| 2         | Science         | Mrs. Johnson|
+
+Let us do some checks to see if this table is in BCNF:
+
+1. Is the table in 3NF? Yes, since there is no transitive dependency (the primary key is a composite key consisting of StudentID and Subject, and there are no non-prime attributes that depend on other non-prime attributes).
+
+2. For every functional dependency X -> Y, is X a super key?
+
+    First things first, we need to identify the functional dependencies in this table. But what the heck is a functional dependency? A functional dependency is a relationship between two sets of attributes in a table, where one set of attributes (the determinant) uniquely determines another set of attributes (the dependent). In this table, we have the following functional dependencies:
+
+    - StudentID, Subject -> Teacher (because the combination of StudentID and Subject uniquely determines the Teacher)
+    - Teacher -> Subject (because each teacher teaches only one subject)
+
+    Now, we need to check if the determinant in each functional dependency is a super key. Is StudentID, Subject a super key? Yes, because it is the primary key of the table. Is Teacher a super key? No, because it does not uniquely identify each record in the table (e.g., Mrs. Johnson teaches both Science for StudentID 1 and StudentID 2). Hence, there is a functional dependency where the determinant is not a super key.
+
+We stop here because the table fails the second criterion for BCNF. The problematic functional dependency here is Teacher -> Subject, where Teacher is not a super key. To remove this dependency, we can create a new table for teachers that contains Teacher and Subject, and then remove the Subject column from the original table. The new tables will look like this:
+
+**Students Table:**
+
+| StudentID | Teacher         |
+|-----------|-----------------|
+| 1         | Mr. Smith       |
+| 1         | Mrs. Johnson    |
+| 2         | Mr. Jones       |
+| 2         | Mrs. Johnson    |
+
+**Teachers Table:**
+
+| Teacher     | Subject         |
+|-------------|-----------------|
+| Mr. Smith   | Math            |
+| Mrs. Johnson| Science         |
+| Mr. Jones   | Math            |
+
+In most of the cases, if a table is in 3NF, then it will also be in BCNF except for some rare cases where there are overlapping candidate keys.
