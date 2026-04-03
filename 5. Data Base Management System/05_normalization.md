@@ -73,7 +73,9 @@ Hence, the table is now in First Normal Form (1NF).
 A table is in Second Normal Form (2NF) if it meets the following criteria:
 
 1. It is in First Normal Form (1NF).
-2. It does not have any partial dependency, which means that no non-prime attribute should depend on a part of the primary key. Bro what? Okay, so basically if we have a composite key, then all the non-key columns should depend on the complete composite key, not just a part of it.
+2. It does not have any partial dependency, which means that no non-prime attribute should depend on a part of the primary key.
+
+    Bro what? Okay, so basically if we have a composite key, then all the non-key columns should depend on the complete composite key, not just a part of it.
 
 For example, consider the following table that contains information about students, their courses, and their grades:
 
@@ -146,7 +148,9 @@ Well if you remember, this is the same table we had before in the earlier 2NF ex
 A table is in Third Normal Form (3NF) if it meets the following criteria:
 
 1. It is in Second Normal Form (2NF).
-2. It does not have any transitive dependency, which means that no non-prime attribute should depend on another non-prime attribute. If say there is a table which contains columns prim, col1, and col2, where prim is the primary key and col1 and col2 are non-prime attributes, then there should not be any dependency between col1 and col2. In other words, if col1 depends on prim and col2 depends on col1, then there is a transitive dependency and the table is not in 3NF. But if col2 depends on prim directly, then there is no transitive dependency and the table is in 3NF.
+2. It does not have any transitive dependency, which means that no non-prime attribute should depend on another non-prime attribute.
+
+    Say there is a table which contains columns prim, col1, and col2, where prim is the primary key and col1 and col2 are non-prime attributes, then there should not be any dependency between col1 and col2. In other words, if col1 depends on prim and col2 depends on col1, then there is a transitive dependency and the table is not in 3NF. But if col2 depends on prim directly, then there is no transitive dependency and the table is in 3NF.
 
 For example, consider the following table that contains information about students, their names, and their ages:
 
@@ -210,7 +214,9 @@ Well, if you remember, this is the same table we had before in the earlier 3NF e
 A table is in Boyce-Codd Normal Form (BCNF) if it meets the following criteria:
 
 1. It is in Third Normal Form (3NF).
-2. For every functional dependency X -> Y, X should be a super key. Hmm, some gibberish right? To put simply, every column must depend on the primary key, including the columns that are part of the primary key. This is a stronger version of 3NF because in 3NF, we only require that non-prime attributes should not depend on other non-prime attributes, but in BCNF, we require that every attribute should depend on the primary key and nothing else.
+2. For every functional dependency X -> Y, X should be a super key.
+
+    Hmm, some gibberish right? To put simply, every column must depend on the primary key, including the columns that are part of the primary key. This is a stronger version of 3NF because in 3NF, we only require that non-prime attributes should not depend on other non-prime attributes, but in BCNF, we require that every attribute should depend on the primary key and nothing else.
 
 For example, consider the following table that contains information about students, subjects, and their teachers. An assumption here is that each teacher teaches only one subject, but a subject can be taught by multiple teachers (e.g., different sections of the same course):
 
@@ -311,3 +317,68 @@ We stop here because the table fails the second criterion for 4NF. The problemat
 | 2         | Cooking        |
 
 So, we have successfully removed the non-trivial multivalued dependencies and hence, both the Hobbies table and the Skills table are now in Fourth Normal Form (4NF).
+
+## Fifth Normal Form (5NF)
+
+A table is in Fifth Normal Form (5NF) if it meets the following criteria:
+
+1. It is in Fourth Normal Form (4NF).
+2. It does not have any join dependency and joining should be lossless.
+
+    A join dependency occurs when a table can be decomposed into multiple tables that can be joined back together to produce the original table, but the join is not lossless. A join is lossless if the original table can be reconstructed by joining the decomposed tables without any loss of information.
+
+In a nutshell, if I decompose a table and joining back gives extra or missing rows, the join is not lossless — meaning the split was unsafe, so the original table is in 5NF. If joining back gives the exact same table, the join is lossless — meaning the table had redundant structure that could be safely split, so the original table violates 5NF and the split tables are now in 5NF.
+
+For example, consider the following table that contains information about students, their courses, and their instructors:
+
+| StudentID | Course          | Instructor     |
+|-----------|-----------------|----------------|
+| 1         | Math            | Mr. Smith      |
+| 1         | Science         | Mrs. Johnson   |
+| 2         | Math            | Mr. Smith      |
+| 2         | Math            | Mrs. Jones     |
+
+Let us do some checks to see if this table is in 5NF:
+
+1. Is the table in 4NF? Yes, since there are no non-trivial multivalued dependencies (Every instructor teaches only one course, and each student can enroll in multiple courses, but there is no dependency between the courses and the instructors).
+
+2. Does it have any join dependency and is the join lossless?
+
+    We can try to decompose the original table into three tables, one for students and courses, one for courses and instructors, and one for students and instructors. The new tables will look like this:
+
+    **Students_Courses Table:**
+
+    | StudentID | Course          |
+    |-----------|-----------------|
+    | 1         | Math            |
+    | 1         | Science         |
+    | 2         | Math            |
+
+    **Courses_Instructors Table:**
+
+    | Course          | Instructor     |
+    |-----------------|----------------|
+    | Math            | Mr. Smith      |
+    | Science         | Mrs. Johnson   |
+    | Math            | Mrs. Jones     |
+
+    **Students_Instructors Table:**
+
+    | StudentID | Instructor     |
+    |-----------|----------------|
+    | 1         | Mr. Smith      |
+    | 1         | Mrs. Johnson   |
+    | 2         | Mr. Smith      |
+    | 2         | Mrs. Jones     |
+
+    If we try to join these three tables back together, this is what we get:
+
+    | StudentID | Course          | Instructor     |
+    |-----------|-----------------|----------------|
+    | 1         | Math            | Mr. Smith      |
+    | 1         | Science         | Mrs. Johnson   |
+    | 2         | Math            | Mr. Smith      |
+    | 2         | Math            | Mrs. Jones     |
+    | 1         | Math            | Mrs. Jones     |
+
+As you can see, we have an extra row (StudentID 1, Course "Math", Instructor "Mrs. Jones") that was not present in the original table. This means that we should not have decomposed the original table, so the original table is in Fifth Normal Form (5NF).
