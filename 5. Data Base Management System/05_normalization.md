@@ -140,3 +140,67 @@ No non-prime attribute should depend on a part of the primary key. The problemat
 Well if you remember, this is the same table we had before in the earlier 2NF example! So, we have successfully removed the partial dependency and hence, the Enrollments table is now in Second Normal Form (2NF).
 
 **Note:** A table that has a single attribute primary key is automatically in 2NF if it is in 1NF, because there cannot be any partial dependency when there is only one attribute in the primary key. Hence, we can say that the Students table is in 2NF without even checking for partial dependency.
+
+## Third Normal Form (3NF)
+
+A table is in Third Normal Form (3NF) if it meets the following criteria:
+
+1. It is in Second Normal Form (2NF).
+2. It does not have any transitive dependency, which means that no non-prime attribute should depend on another non-prime attribute. If say there is a table which contains columns prim, col1, and col2, where prim is the primary key and col1 and col2 are non-prime attributes, then there should not be any dependency between col1 and col2. In other words, if col1 depends on prim and col2 depends on col1, then there is a transitive dependency and the table is not in 3NF. But if col2 depends on prim directly, then there is no transitive dependency and the table is in 3NF.
+
+For example, consider the following table that contains information about students, their names, and their ages:
+
+| StudentID | Name            | Age |
+|-----------|-----------------|-----|
+| 1         | Alice           | 20  |
+| 2         | Bob             | 22  |
+| 3         | Charlie         | 21  |
+| 4         | Dave            | 20  |
+| 5         | Alice           | 22  |
+
+Let us do some checks to see if this table is in 3NF:
+
+1. Is the table in 2NF? Yes, since there is no partial dependency (the primary key is StudentID, which is a single attribute, so there cannot be any partial dependency).
+2. Does it have any transitive dependency?
+
+    The non-prime attributes in this table are Name and Age. Does Name depend on StudentID? Yes, because each student has a specific name. Does Age depend on StudentID? Yes, because each student has a specific age. Now, we need to check if there is any dependency between Name and Age. Does Age depend on Name? No, because the same name can have different ages (e.g., StudentID 1 and 5 both have the name "Alice" but different ages). Hence, there is no transitive dependency in this table.
+
+Consider another table that contains information about students, their names, their ages, and Birth Year:
+
+| StudentID | Name            | Age | BirthYear |
+|-----------|-----------------|-----|-----------|
+| 1         | Alice           | 20  | 2004      |
+| 2         | Bob             | 22  | 2002      |
+| 3         | Charlie         | 21  | 2003      |
+| 4         | Dave            | 20  | 2004      |
+| 5         | Alice           | 22  | 2002      |
+
+Let us do our usual checks again:
+
+1. Is the table in 2NF? Yes, since there is no partial dependency (the primary key is StudentID, which is a single attribute, so there cannot be any partial dependency).
+
+2. Does it have any transitive dependency?
+
+    The non-prime attributes in this table are Name, Age, and BirthYear. We already know that Name and Age depend on StudentID. Now, we need to check if there is any dependency between Name, Age, and BirthYear. Does BirthYear depend on Name? No, because the same name can have different birth years (e.g., StudentID 1 and 5 both have the name "Alice" but different birth years). Does BirthYear depend on Age? Yes, because the same age can have different birth years (e.g., StudentID 1 and 4 both have the age "20" but different birth years). Hence, there is a transitive dependency between Age and BirthYear.
+
+We stop here because the table fails the second criterion for 3NF. Again, what does the second criterion say? No non-prime attribute should depend on another non-prime attribute. The problematic non-prime attribute here is BirthYear, which depends on Age. To remove this transitive dependency, we can create a new table for ages that contains Age and BirthYear, and then remove the BirthYear column from the original table. The new tables will look like this:
+
+**Students Table:**
+
+| StudentID | Name            | Age |
+|-----------|-----------------|-----|
+| 1         | Alice           | 20  |
+| 2         | Bob             | 22  |
+| 3         | Charlie         | 21  |
+| 4         | Dave            | 20  |
+| 5         | Alice           | 22  |
+
+**Ages Table:**
+
+| Age | BirthYear |
+|-----|-----------|
+| 20  | 2004      |
+| 22  | 2002      |
+| 21  | 2003      |
+
+Well, if you remember, this is the same table we had before in the earlier 3NF example! So, we have successfully removed the transitive dependency and hence, the Students table is now in Third Normal Form (3NF).
