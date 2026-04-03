@@ -254,3 +254,60 @@ We stop here because the table fails the second criterion for BCNF. The problema
 | Mr. Jones   | Math            |
 
 In most of the cases, if a table is in 3NF, then it will also be in BCNF except for some rare cases where there are overlapping candidate keys.
+
+## Fourth Normal Form (4NF)
+
+A table is in Fourth Normal Form (4NF) if it meets the following criteria:
+
+1. It is in Boyce-Codd Normal Form (BCNF).
+2. It does not have any non-trivial multivalued dependency in the table. A multivalued dependency occurs when one attribute in a table uniquely determines another attribute, but there can be multiple values of the second attribute for each value of the first attribute. For example, if we have a table with attributes A, B, and C, and there is a multivalued dependency A ->> B, it means that for each value of A, there can be multiple values of B, and these values of B are independent of each other.
+
+I know this is too much to handle, but let's try to understand it with an example.
+
+Consider the following table that contains information about students, their hobbies, and their skills:
+
+| StudentID | Hobby           | Skill          |
+|-----------|-----------------|----------------|
+| 1         | Painting        | Programming    |
+| 1         | Painting        | Cooking        |
+| 1         | Music           | Programming    |
+| 1         | Music           | Cooking        |
+| 2         | Painting        | Programming    |
+| 2         | Painting        | Cooking        |
+| 2         | Music           | Programming    |
+| 2         | Music           | Cooking        |
+
+Let us do some checks to see if this table is in 4NF:
+
+1. Is the table in BCNF? Yes, since there are no functional dependencies where the determinant is not a super key (the primary key is a composite key consisting of StudentID, Hobby, and Skill, and there are no non-prime attributes that depend on other non-prime attributes).
+
+2. Does it have any non-trivial multi-valued dependency?
+
+    The multi-valued dependencies in this table are:
+
+    - StudentID ->> Hobby (because for each StudentID, there can be multiple Hobbies)
+    - StudentID ->> Skill (because for each StudentID, there can be multiple Skills)
+
+    Now, we need to check if these multivalued dependencies are trivial or non-trivial. A multivalued dependency is trivial if the dependent attribute is a subset of the determinant attribute or if the determinant attribute is a super key. Gibberish again right? Okay, every student has multiple hobbies and multiple skills, but the hobbies and skills are independent of each other. For example, StudentID 1 has the hobby "Painting" and the skill "Programming", but there is no dependency between the hobby and the skill. Hence, these multivalued dependencies are non-trivial.
+
+We stop here because the table fails the second criterion for 4NF. The problematic multivalued dependencies here are StudentID ->> Hobby and StudentID ->> Skill, which are non-trivial. To remove these multivalued dependencies, we can split the original table into two tables, one for hobbies and one for skills. The new tables will look like this:
+
+**Hobbies Table:**
+
+| StudentID | Hobby           |
+|-----------|-----------------|
+| 1         | Painting        |
+| 1         | Music           |
+| 2         | Painting        |
+| 2         | Music           |
+
+**Skills Table:**
+
+| StudentID | Skill          |
+|-----------|----------------|
+| 1         | Programming    |
+| 1         | Cooking        |
+| 2         | Programming    |
+| 2         | Cooking        |
+
+So, we have successfully removed the non-trivial multivalued dependencies and hence, both the Hobbies table and the Skills table are now in Fourth Normal Form (4NF).
